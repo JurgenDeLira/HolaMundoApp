@@ -12,6 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.holamundoapp.ui.theme.HolaMundoAppTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.holamundoapp.ui.UserViewModel
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,8 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             HolaMundoAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    MyScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -31,17 +33,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "¡Hola Mundo!",
-        modifier = modifier
-    )
+fun MyScreen(viewModel: UserViewModel = viewModel(), modifier: Modifier = Modifier) {
+    val user = viewModel.getUser()
+    val edad = viewModel.getEdad()
+
+    Text(text = "Hola, ${user.name}. Edad: $edad", modifier = modifier)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MyScreenPreview() {
     HolaMundoAppTheme {
-        Greeting("Android")
+        MyScreen()
     }
 }
